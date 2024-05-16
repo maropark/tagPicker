@@ -72,10 +72,11 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
       style={TextSearchAddIconStyles.container}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      data-testid="text-search-add-icon"
     >
       {!isClicked ? (
-        <div style={TextSearchAddIconStyles.addIconWrapper} onClick={handleAddClick}>
-          <AddCircleIcon style={TextSearchAddIconStyles.addIcon(isHovered)} />
+        <div style={TextSearchAddIconStyles.addIconWrapper} onClick={handleAddClick} data-testid="add-icon-wrapper">
+          <AddCircleIcon style={TextSearchAddIconStyles.addIcon(isHovered)} data-testid="add-icon" />
           {isHovered && <span style={TextSearchAddIconStyles.addIconText}>{i18n("addIconDescription")}</span>}
         </div>
       ) : (
@@ -92,14 +93,16 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
               onClick={onClickTextField}
               onBlur={onBlurTextField}
               style={TextSearchAddIconStyles.textField}
+              inputProps={{ "data-testid": "input-text-field" }}
             />
           }
           variant="outlined"
           style={TextSearchAddIconStyles.chip}
+          data-testid="chip"
         />
       )}
       {isClicked && inputValue.length > 0 && (
-        <Paper elevation={3} style={TextSearchAddIconStyles.paper}>
+        <Paper elevation={3} style={TextSearchAddIconStyles.paper} data-testid="paper">
           {filteredTags.map((tag, index) => (
             <Chip
               key={index}
@@ -114,10 +117,11 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
                 e.currentTarget.style.backgroundColor = 'transparent';
                 e.currentTarget.style.color = '#cfb2f6';
               }}
+              data-testid={`tag-chip-${index}`}
             />
           ))}
-          <div style={TextSearchAddIconStyles.createTagWrapper} onClick={() => handleCreateTag()}>
-            <AddCircleIcon style={{ color: '#cfb2f6' }} />
+          <div style={TextSearchAddIconStyles.createTagWrapper} onClick={() => handleCreateTag()} data-testid="create-tag-wrapper">
+            <AddCircleIcon style={{ color: '#cfb2f6' }} data-testid="create-tag-icon" />
             <span style={TextSearchAddIconStyles.createTagText}>{i18n("createTagIconDescription")}</span>
           </div>
         </Paper>
