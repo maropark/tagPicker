@@ -43,14 +43,18 @@ const TextSearchAddIconStyles = {
       overflowX: 'hidden',
       border: '2px solid #cfb2f6',
       zIndex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '8px',
     },
     tagChip: {
-      margin: '5px',
+      margin: '5px 0',
       cursor: 'pointer',
       color: '#cfb2f6',
       borderColor: '#cfb2f6',
       backgroundColor: 'transparent',
       transition: 'background-color 0.3s, color 0.3s',
+      justifyContent: 'flex-start'
     },
     createTagWrapper: {
       display: 'flex',
