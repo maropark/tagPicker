@@ -1,7 +1,7 @@
 import Tag from "./Tag";
 import { useState } from "react";
-import { Box, TextField } from "@mui/material";
-import TextSearchAddIcon from "./TextSearchAddIcon";
+import { Box } from "@mui/material";
+import TextSearchAddIcon from "../tags/TextSearchAddIcon";
 import i18n from "../../utilities/translations/i18n";
 
 const TagsContainer = ({ tags, allTags, userTags, onRemove, onTagAssigned }) => {

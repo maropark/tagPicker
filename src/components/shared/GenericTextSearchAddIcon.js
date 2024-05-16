@@ -65,7 +65,6 @@ const GenericTextSearchAddIcon = ({
       onAssigned(existingItem.uuid);
     } else {
       try {
-        // Call the createItem function passed as prop
         const newItem = await createItem(inputValue);
         onAssigned(newItem.uuid);
       } catch (error) {
