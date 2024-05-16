@@ -8,7 +8,7 @@ const TagPicker = ({ initialTags, allTags, userTags, onTagAssigned, onTagRemoved
     padding: '16px',
     width: '100%',
     boxSizing: 'border-box',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   };
 
   return (
