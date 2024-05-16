@@ -7,7 +7,6 @@ import { createTag } from '../../api';
 import i18n from '../../utilities/translations/i18n';
 import TextSearchAddIconStyles from './TextSearchAddIconStyles';
 
-
 const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTextField, onBlurTextField }) => {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
