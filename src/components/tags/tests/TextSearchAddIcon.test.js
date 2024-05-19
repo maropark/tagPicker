@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import TextSearchAddIcon from '../TextSearchAddIcon'; // Adjust the path as needed
-import { createTag } from '../../../api'; // Adjust the path as needed
-import i18n from '../../../utilities/translations/i18n'; // Adjust the path as needed
+import TextSearchAddIcon from '../TextSearchAddIcon';
+import { createTag } from '../../../api';
+import i18n from '../../../utilities/translations/i18n';
 
 jest.mock('../../../api', () => ({
   createTag: jest.fn(),
@@ -133,6 +133,44 @@ describe('TextSearchAddIcon', () => {
     fireEvent.keyDown(screen.getByTestId('input-text-field'), { key: 'Enter', code: 'Enter' });
 
     await waitFor(() => expect(createTag).toHaveBeenCalledWith({ title: 'NewTag' }));
+  });
+
+  it('should show snackbar with appropriate message when tag is already assigned', async () => {
+    render(
+      <TextSearchAddIcon
+        onTagAssigned={onTagAssigned}
+        tagOptions={tagOptions}
+        existingTags={existingTags}
+        onClickTextField={onClickTextField}
+        onBlurTextField={onBlurTextField}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId('add-icon'));
+    fireEvent.change(screen.getByTestId('input-text-field'), { target: { value: 'Tag1' } });
+    fireEvent.keyDown(screen.getByTestId('input-text-field'), { key: 'Enter', code: 'Enter' });
+
+    await waitFor(() => expect(screen.getByText(i18n("tagAlreadyAssigned"))).toBeInTheDocument());
+  });
+
+  it('should show snackbar with appropriate message when creating a tag fails', async () => {
+    createTag.mockRejectedValue(new Error('Failed to create tag'));
+
+    render(
+      <TextSearchAddIcon
+        onTagAssigned={onTagAssigned}
+        tagOptions={tagOptions}
+        existingTags={existingTags}
+        onClickTextField={onClickTextField}
+        onBlurTextField={onBlurTextField}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId('add-icon'));
+    fireEvent.change(screen.getByTestId('input-text-field'), { target: { value: 'NewTag' } });
+    fireEvent.keyDown(screen.getByTestId('input-text-field'), { key: 'Enter', code: 'Enter' });
+
+    await waitFor(() => expect(screen.getByText(i18n("errorCreatingTag"))).toBeInTheDocument());
   });
 
   it('should reset input and close text field after tag is assigned', async () => {
