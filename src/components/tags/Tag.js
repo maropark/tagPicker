@@ -14,11 +14,11 @@ const Tag = ({ tag, onRemove }) => {
                 color: textColor,
                 backgroundColor: tag.color,
                 margin: '4px',
-                padding: '0 8px', // Add padding for a better look
-                borderRadius: '16px', // Make the tags more rounded
+                padding: '0 8px',
+                borderRadius: '16px',
                 cursor: 'pointer',
-                fontWeight: 'bold', // Make text bold
-                transition: 'background-color 0.3s, color 0.3s', // Smooth transition for hover effect
+                fontWeight: 'bold',
+                transition: 'background-color 0.3s, color 0.3s',
             }}
             onDelete={isHovered ? () => onRemove(tag.uuid) : null}
             deleteIcon={<CloseIcon style={{ color: textColor, fontSize: '16px' }} />}

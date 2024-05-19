@@ -54,14 +54,6 @@ const TagsContainer = ({ tags, allTags, userTags, onRemove, onTagAssigned }) => 
               key={tag.uuid} 
               tag={tag} 
               onRemove={onRemove} 
-              sx={{ 
-                padding: '4px 8px', 
-                borderRadius: '16px', 
-                backgroundColor: '#f0f0f0', 
-                marginRight: '8px', 
-                marginBottom: '8px', 
-                cursor: 'pointer' 
-              }} 
             />
           ))}
           {((isHovered && !isIconHovered) || isIconHovered || isClicked) && (
@@ -73,19 +65,6 @@ const TagsContainer = ({ tags, allTags, userTags, onRemove, onTagAssigned }) => 
               onMouseLeave={handleIconMouseLeave} 
               onClickTextField={handleTextFieldClick}
               onBlurTextField={handleTextFieldBlur}
-              sx={{ 
-                padding: '4px 8px', 
-                borderRadius: '16px', 
-                backgroundColor: '#ffffff', 
-                border: '1px solid #d0d0d0', 
-                marginBottom: '8px',
-                '&:hover': {
-                  borderColor: '#b0b0b0',
-                },
-                '&:focus': {
-                  borderColor: '#a0a0a0',
-                }
-              }}
             />
           )}
         </Box>
