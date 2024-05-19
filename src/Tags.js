@@ -1,6 +1,6 @@
 import * as React from "react";
 import { fetchTags, fetchUserTags, assignUserTag, removeUserTag } from "./api";
-import TagPicker from "./components/tags/TagPicker"
+import TagPicker from "./components/tags/TagPicker";
 
 export function UserTags({ user }) {
   const [allTags, setAllTags] = React.useState(null);

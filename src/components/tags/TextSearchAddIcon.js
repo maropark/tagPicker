@@ -3,6 +3,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import { createTag } from '../../api';
 import i18n from '../../utilities/translations/i18n';
 import TextSearchAddIconStyles from './TextSearchAddIconStyles';
@@ -13,6 +15,8 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
   const [isClicked, setIsClicked] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [filteredTags, setFilteredTags] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -49,21 +53,31 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
     if (!inputValue.trim()) return;
 
     const existingTag = tagOptions.find(tag => tag.title.toLowerCase() === inputValue.toLowerCase());
-    if (existingTag) {
+    const isAlreadyAssigned = existingTags.some(uuid => uuid === existingTag?.uuid);
+
+    if (isAlreadyAssigned) {
+      setSnackbarMessage(i18n("tagAlreadyAssigned"));
+      setSnackbarOpen(true);
+    } else if (existingTag) {
       onTagAssigned(existingTag.uuid);
     } else {
       try {
         const newTag = await createTag({ title: inputValue });
         onTagAssigned(newTag.uuid);
       } catch (error) {
-        console.error('Error creating tag:', error);
-        // TODO: implement snackbar
+        setSnackbarMessage(i18n("errorCreatingTag"));
+        setSnackbarOpen(true);
       }
     }
 
     setInputValue('');
     setIsClicked(false);
   };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
 
   return (
     <div
@@ -125,6 +139,11 @@ const TextSearchAddIcon = ({ onTagAssigned, tagOptions, existingTags, onClickTex
           </div>
         </Paper>
       )}
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
